@@ -1,0 +1,28 @@
+{
+    "name": "yuri/slim",
+    "description": "PHP Framework based on Slim",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Yuri\\Slim\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yuri",
+            "email": "yuricronos@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.5",
+        "nyholm/psr7": "^1.4",
+        "nyholm/psr7-server": "^1.0",
+        "guzzlehttp/psr7": "^1",
+        "sapphirecat/slim4-http-interop-adapter": "^1.0",
+        "laminas/laminas-diactoros": "^2.8",
+        "php-di/php-di": "^6.3",
+        "illuminate/database": "^8.82",
+        "illuminate/events": "^8.82"
+    }
+}
