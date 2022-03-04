@@ -30,7 +30,7 @@ class Constant
     private const DB = array(
         'driver' => 'mysql',
         'host' => 'localhost',
-        'database' => 'test_db',
+        'database' => 'test',
         'username' => 'admin',
         'password' => 'password',
         'charset' => 'utf8',
