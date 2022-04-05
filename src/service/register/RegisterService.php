@@ -4,58 +4,53 @@ namespace Yuri\Slim\service\register;
 
 use Exception;
 use Yuri\Slim\helper\CryptUtilService;
-use Yuri\Slim\model\QueryResponse;
-use Yuri\Slim\model\users\dto\AccountsDto;
-use Yuri\Slim\model\users\dao\ProfileDao;
-use Yuri\Slim\model\users\dao\UsersDao;
-use Yuri\Slim\model\users\Profile;
-use Yuri\Slim\model\users\User;
+use Yuri\Slim\helper\database\DBManager;
+use Yuri\Slim\model\users\form\AccountsForm;
+use Yuri\Slim\model\users\Users;
 
-class RegisterService implements Register
+class RegisterService extends DBManager implements IRegisterService
 {
-    public static function accounts(AccountsDto $acctDtls): string
+    public function accounts(AccountsForm $accountsForm): string
     {
-        $queryResponse = new QueryResponse();
         try {
 
-            if (!in_array($acctDtls->usr_typ_cd, USR_TYP_CD)) {
+            if (!in_array($accountsForm->account_type, USR_TYP_CD)) {
                 $msg = " user type code not recognize.";
-                throw new Exception($acctDtls->usr_typ_cd . $msg);
+                throw new Exception($accountsForm->account_type . $msg);
             }
-            
-            $userModel = new User($acctDtls);
-            $user = UsersDao::create($userModel->jsonSerialize());
+
+            $plainPassword = $accountsForm->password;
+
+            $accountsForm->password = CryptUtilService::encrypt($plainPassword);
+
+            $userCount = Users::select('expiration')->get()->count();
+
+            if ($userCount > 0) {
+                throw new Exception("user creation closed.");
+            }
+
+            $user = Users::create($accountsForm->jsonSerialize());
             $user->save();
 
-            $profileModel = new Profile($acctDtls);
-            $profileModel->user_id = $user->user_id;
-            $profile = ProfileDao::create($profileModel->jsonSerialize());
-            $profile->save();
-
-            $queryResponse->code = QUERY_STATUS[($user) ? 'success' : 'failed'];
-            $queryResponse->message = array(
+            $this->setCode(QUERY_STATUS[($user) ? 'success' : 'failed']);
+            $this->setMessage(array(
                 'user_id' => $user->user_id,
                 'user' => array(
                     'id' => $user->id,
                     'password' => array(
-                        'password' => $acctDtls->password,
+                        'password' => $accountsForm->password,
                         'hash' => $user->password,
-                        'verify' => CryptUtilService::verify(
-                            $acctDtls->password,
-                            $user->password
-                        )
+                        'verify' => CryptUtilService::verify($plainPassword, $user->password)
                     )
-                ),
-                'profile' => array('id' => $profile->id)
-            );
-            return json_encode($queryResponse->jsonSerialize());
+                )
+            ));
         } catch (Exception $e) {
-            $queryResponse->code = QUERY_STATUS['failed'];
-            $queryResponse->message = array(
+            $this->setCode(QUERY_STATUS['failed']);
+            $this->setMessage(array(
                 'class' => "RegisterService",
                 'exception' => $e->getMessage()
-            );
-            return json_encode($queryResponse->jsonSerialize());
+            ));
         }
+        return json_encode($this->jsonSerialize());
     }
 }

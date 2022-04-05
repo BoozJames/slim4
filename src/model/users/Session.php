@@ -1,10 +1,10 @@
 <?php
 
-namespace Yuri\Slim\model\users\dao;
+namespace Yuri\Slim\model\users;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SessionDao extends Model
+class Session extends Model
 {
 
     protected $table = "user_session";

@@ -1,6 +1,9 @@
 <?php
 
+use Yuri\Slim\constant\Constant;
 use Yuri\Slim\http\Web;
+use Yuri\Slim\service\login\LoginService;
+use Yuri\Slim\service\register\RegisterService;
 
 // /* Remove this line when deploying the application */
 ini_set('display_errors', 1);
@@ -10,4 +13,9 @@ error_reporting(E_ALL);
 
 require __DIR__ . "/../vendor/autoload.php";
 
-new Web();
+new Constant();
+
+new Web(
+    new RegisterService(),
+    new LoginService()
+);

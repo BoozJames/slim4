@@ -2,19 +2,21 @@
 
 namespace Yuri\Slim\service\login;
 
+use DateTime;
 use Exception;
 use Yuri\Slim\helper\CryptUtilService;
+use Yuri\Slim\helper\database\DBManager;
 use Yuri\Slim\helper\Jwt;
-use Yuri\Slim\model\QueryResponse;
-use Yuri\Slim\model\users\dto\LoginDto;
-use Yuri\Slim\model\users\dao\UsersDao;
+use Yuri\Slim\model\users\form\LoginForm;
+use Yuri\Slim\model\users\form\UsersForm;
+use Yuri\Slim\model\users\Session;
+use Yuri\Slim\model\users\Users;
 use Yuri\Slim\service\session\SessionService;
 
-class LoginService implements Login
+class LoginService extends DBManager implements ILoginService
 {
-    public static function attempt(LoginDto $crendetials): string
+    public function attempt(LoginForm $crendetials): string
     {
-        $queryResponse = new QueryResponse();
         try {
             $params = $crendetials->jsonSerialize();
 
@@ -26,7 +28,11 @@ class LoginService implements Login
 
             $match = array("username" => $params['username']);
             $verifyLogin = false;
-            foreach (UsersDao::where($match)->cursor() as $user) {
+            foreach (Users::where($match)->cursor() as $user) {
+                if (($user->account_type != USR_TYP_CD['admin']) && (new DateTime(date('m/d/Y')) >= new DateTime($user->expiration))) {
+                    throw new Exception(LOGIN_STATUS['expired_account']);
+                    break;
+                }
                 $verifyLogin = CryptUtilService::verify(
                     $params['password'],
                     $user->password
@@ -44,22 +50,50 @@ class LoginService implements Login
             $jwt = Jwt::generate($payload);
 
             if (SessionService::save($payload, $jwt['signature'])) {
-                $queryResponse->message = array(
+                $this->setMessage(array(
                     'isLogin' => $verifyLogin,
                     'token' => $jwt['token']
-                );
+                ));
             } else {
                 throw new Exception(SESSION_SERVICE['save_failed']);
             }
-
-            return json_encode($queryResponse->jsonSerialize());
         } catch (Exception $e) {
-            $queryResponse->code = QUERY_STATUS['failed'];
-            $queryResponse->message = array(
+            $this->setCode(QUERY_STATUS['failed']);
+            $this->setMessage(array(
                 'class' => "LoginService",
                 'exception' => $e->getMessage()
-            );
-            return json_encode($queryResponse->jsonSerialize());
+            ));
         }
+        return json_encode($this->jsonSerialize());
+    }
+
+    public function logout(UsersForm $usersForm): string
+    {
+        try {
+            if (!SessionService::verify($usersForm->token)) {
+                throw new Exception(SESSION_SERVICE['invalid_token']);
+            }
+
+            $tokenArray = Jwt::parseToken($usersForm->token);
+            $users = Session::where('user_id', $tokenArray->user_id)->delete();
+
+            if (!$users) {
+                throw new Exception(SESSION_SERVICE['failed_delete']);
+            }
+
+            $this->setMessage(SESSION_SERVICE['deleted']);
+        } catch (Exception $e) {
+            $this->setCode(QUERY_STATUS['failed']);
+            $resp = array(
+                'class' => 'LoginService',
+                'exception' => $e->getMessage()
+            );
+            if ($e->getMessage() == SESSION_SERVICE['no_session']) {
+                $resp['no_session'] = true;
+            }
+            $this->setMessage($resp);
+        }
+
+        return json_encode($this->jsonSerialize());
     }
 }
