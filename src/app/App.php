@@ -6,16 +6,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 use Slim\Factory\AppFactory;
-use Yuri\Slim\constant\Constant;
 
-class App extends Constant
+class App 
 {
     public static $mainApp;
     // public static $mainContainer;
 
     public function __construct($basePath = "", $displayErrorDetails = false)
     {
-        parent::__construct();
 
         date_default_timezone_set(TIMEZONE);
 
