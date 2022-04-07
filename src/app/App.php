@@ -7,7 +7,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 use Slim\Factory\AppFactory;
 
-class App 
+class App
 {
     public static $mainApp;
     // public static $mainContainer;

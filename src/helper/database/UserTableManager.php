@@ -15,11 +15,12 @@ class UserTableManager
             Manager::schema()->dropIfExists('users');
             Manager::schema()->create('users', function ($table) {
                 $table->id()->primaryKey();
-                $table->string('user_id');
+                $table->string('user_id')->unique();
                 $table->string('name');
-                $table->string('email')->unique();
                 $table->string('username')->unique();
                 $table->string('password', 1024);
+                $table->string('account_type', 50);
+                $table->string('expiration');
             });
 
             $queryResponse->message = "success";
