@@ -12,7 +12,6 @@ class CreateTableService implements CreateTable
         try {
             $result = array(
                 'users' => UserTableManager::createUsersTable(),
-                'user_profile' => UserTableManager::createUsersProfileTable(),
                 'user_session' => UserTableManager::createSessionTable()
             );
 

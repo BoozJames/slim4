@@ -22,7 +22,8 @@ class Web extends App
         IRegisterService $registerService,
         ILoginService $loginService
     ) {
-        parent::__construct("", true);
+        parent::__construct("slim4/public/index.php", true);
+        
 
         // --------------------------------------------------------------------------------
         App::$mainApp->get(
