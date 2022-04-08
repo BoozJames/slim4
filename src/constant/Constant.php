@@ -30,14 +30,26 @@ class Constant
     private const DB = array(
         'driver' => 'mysql',
         'host' => 'localhost',
-        'database' => 'test_dbname',
+        'database' => 'slim',
         'username' => 'admin',
         'password' => 'password',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix' => ''
     );
-    
+
+    // private const DB = [
+    //     'driver' => 'pgsql',
+    //     'host' => '127.0.0.1',
+    //     'database' => 'market',
+    //     'username' => 'postgres',
+    //     'password' => 'password',
+    //     'charset' => 'utf8',
+    //     'prefix' => '',
+    //     'schema' => 'public',
+    //     'sslmode' => 'prefer'
+    // ];
+
     private const TIME_ZONE = "Asia/Manila";
 
     private const HTTP_STATUS = array(
