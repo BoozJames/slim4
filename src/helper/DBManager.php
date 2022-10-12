@@ -1,14 +1,14 @@
 <?php
 
-namespace Yuri\Slim\helper\database;
+namespace Yuri\Slim\helper;
 
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Events\Dispatcher;
-use Yuri\Slim\model\ApiResponse;
+use Yuri\Slim\service\abstracts\AppService;
 
-class DBManager extends ApiResponse
+class DBManager extends AppService
 {
     public function __construct()
     {
