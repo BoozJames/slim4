@@ -37,16 +37,24 @@ class App
     {
         App::$mainApp->add(function (Request $request, RequestHandler $handler) {
             $response = $handler->handle($request);
-            $existingContent = (string) $response->getBody();
-
-            $response = new \Slim\Psr7\Response();
-            foreach (HEADER as $key => $value) {
-                $response->withHeader($key, $value);
-            }
-            $response->getBody()->write($existingContent);
-
-            return $response;
+            return $response
+                ->withHeader('Access-Control-Allow-Origin', $_SERVER['HTTP_ORIGIN'])
+                ->withHeader('Access-Control-Allow-Credentials', 'true')
+                ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
         });
+        // App::$mainApp->add(function (Request $request, RequestHandler $handler) {
+        //     $response = $handler->handle($request);
+        //     $existingContent = (string) $response->getBody();
+
+        //     $response = new \Slim\Psr7\Response();
+        //     foreach (HEADER as $key => $value) {
+        //         $response->withHeader($key, $value);
+        //     }
+        //     $response->getBody()->write($existingContent);
+
+        //     return $response;
+        // });
     }
 
     // set headers after

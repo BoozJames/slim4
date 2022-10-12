@@ -1,18 +1,16 @@
 <?php
 
-namespace Yuri\Slim\model\users\form;
+namespace Yuri\Slim\model;
 
 use JsonSerializable;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Yuri\Slim\app\Model;
 
-class RenewUserForm extends Model implements JsonSerializable
+class DemoModelForm extends Model implements JsonSerializable
 {
-    public string $token = "";
-
-    public string $user_id = "";
-
-    public string $new_expiration = "";
+    public string $property_1 = "";
+    public string $property_2 = "";
+    public string $property_3 = "";
 
     public function __construct(Request $request)
     {
@@ -23,9 +21,9 @@ class RenewUserForm extends Model implements JsonSerializable
     public function jsonSerialize()
     {
         return array(
-            'token' => $this->token,
-            'user_id' => $this->user_id,
-            'new_expiration' => $this->new_expiration
+            'property_1' => $this->property_1,
+            'property_2' => $this->property_2,
+            'property_3' => $this->property_3
         );
     }
 }
