@@ -15,7 +15,7 @@ abstract class AppService implements JsonSerializable
     {
         $classObj = new ReflectionClass($this);
         $mObj = $classObj->getMethods();
-        $methods = array_values(array_filter($mObj, fn ($v) => (str_contains($v->class, "Yuri\Slim\controller") !== false) && ($v->name !== "__construct")));
+        $methods = array_values(array_filter($mObj, fn ($v) => (str_contains($v->class, APP_CONTROLLER) !== false) && ($v->name !== "__construct")));
         foreach ($methods as $value) {
             $this->{$value->name}();
         }
