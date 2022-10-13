@@ -8,12 +8,6 @@ use Yuri\Slim\service\abstracts\AppService;
 
 class DemoService extends AppService
 {
-    public function __construct()
-    {
-        // initialize db manager;
-        // new DBManager();
-    }
-
     public function test(DemoModelForm $demoModelForm)
     {
         try {
