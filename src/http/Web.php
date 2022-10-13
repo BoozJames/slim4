@@ -10,9 +10,9 @@ class Web extends App
     {
         parent::__construct(APP_LINK, true);
 
-        $classes = array_values(array_filter(array_diff(scandir(str_replace("http","controller", __DIR__)), array('.', '..')), fn ($c) => $c !== 'Web.php'));
+        $classes = array_values(array_diff(scandir(str_replace("http", "controller", __DIR__)), array('.', '..')));
         foreach ($classes as $class_file) {
-            $name = "Yuri\Slim\controller\\".explode('.', $class_file)[0];
+            $name = APP_CONTROLLER . "\\" . str_replace(".php", "", $class_file);
             new $name();
         }
     }

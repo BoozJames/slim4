@@ -6,6 +6,7 @@ class Constant
 {
     public function __construct()
     {
+        define('APP_CONTROLLER', 'Yuri\Slim\controller');
 
         define('APP_LINK', env('APP_LINK'));
 
