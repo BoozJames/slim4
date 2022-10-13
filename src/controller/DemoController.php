@@ -1,6 +1,6 @@
 <?php
 
-namespace Yuri\Slim\http;
+namespace Yuri\Slim\controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -9,21 +9,10 @@ use Yuri\Slim\app\App;
 use Yuri\Slim\model\DemoModelForm;
 use Yuri\Slim\service\DemoService;
 
-class WebDemo extends DemoService
+class DemoController extends DemoService
 {
-
-    private $app_name = "demo_service";
-
-    public function __construct()
+    protected function demoTest($endpoint = "/demo_service/test")
     {
-        parent::__construct();
-
-        $this->demoServiceTest("test");
-    }
-
-    private function demoServiceTest($e)
-    {
-        $endpoint = sprintf("/%s/%s", $this->app_name, $e);
         App::$mainApp->post($endpoint, function (Request $request, Response $response, $args) {
             $demoModelForm = new DemoModelForm($request);
             $this->test($demoModelForm);
