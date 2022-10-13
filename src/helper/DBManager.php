@@ -21,12 +21,12 @@ class DBManager extends AppService
             $manager->setAsGlobal();
             $manager->bootEloquent();
         } catch (Exception $e) {
-            $this->setCode(QUERY_STATUS['failed']);
-            $this->setMessage(array(
+            $this->code = QUERY_STATUS['failed'];
+            $this->message = array(
                 'line' => $e->getLine(),
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTrace()
-            ));
+            );
         }
     }
 }
