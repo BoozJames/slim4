@@ -19,7 +19,7 @@ class DemoController extends DemoService
      *  path="/demo_service/test", tags={"Demo Service"}, 
      *  @OA\RequestBody(
      *      @OA\MediaType(
-     *          mediaType="json",
+     *          mediaType="application/json",
      *          @OA\Schema(
      *              @OA\Property(property="property_1", type="string"),
      *              @OA\Property(property="property_2", type="string"),
