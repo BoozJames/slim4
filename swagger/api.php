@@ -18,11 +18,7 @@ foreach ($classes as $class_file) {
 
 $openapi = \OpenApi\Generator::scan($demo_controller);
 header('Content-Type: application/json');
+// echo $openapi->toJson();
 $data = json_decode($openapi->toJson());
-$paths = array();
-foreach ($data->paths as $key => $value) {
-    $key = sprintf("/%s%s", APP_LINK, $key);
-    $paths[$key] = $value;
-}
-$data->paths = $paths;
+$data->servers = array(['url' => "/" . APP_LINK]);
 echo json_encode($data);
