@@ -11,6 +11,7 @@ use Yuri\Slim\service\DemoService;
 
 /**
  * @OA\Info(title="Demo API", version="0.1")
+ * @OA\Server(url="")
  */
 class DemoController extends DemoService
 {
