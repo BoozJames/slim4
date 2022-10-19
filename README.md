@@ -1,7 +1,42 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+A modified and optimized Slim4 framework for building API.       
+# Folder Structure #
+📦slim4     
+ ┣ 📂src    
+ ┃ ┣ 📂app  
+ ┃ ┃ ┣ 📜App.php    
+ ┃ ┃ ┗ 📜Model.php  
+ ┃ ┣ 📂constant     
+ ┃ ┃ ┗ 📜Constant.php   
+ ┃ ┣ 📂controller   
+ ┃ ┃ ┗ 📜DemoController.php     
+ ┃ ┣ 📂helper   
+ ┃ ┃ ┣ 📜CryptUtilService.php   
+ ┃ ┃ ┣ 📜DBManager.php  
+ ┃ ┃ ┣ 📜Jwt.php    
+ ┃ ┃ ┗ 📜StringUtilService.php  
+ ┃ ┣ 📂http     
+ ┃ ┃ ┗ 📜Web.php        
+ ┃ ┣ 📂model    
+ ┃ ┃ ┣ 📜DemoModel.php  
+ ┃ ┃ ┗ 📜DemoModelForm.php  
+ ┃ ┗ 📂service  
+ ┃ ┃ ┣ 📂abstracts  
+ ┃ ┃ ┃ ┗ 📜AppService.php   
+ ┃ ┃ ┗ 📜DemoService.php    
+ ┣ 📂swagger    
+ ┃ ┣ 📂swagger  
+ ┃ ┣ 📜api.php  
+ ┃ ┗ 📜index.php    
+ ┣ 📜.env.sample    
+ ┣ 📜.gitignore     
+ ┣ 📜composer.json  
+ ┣ 📜composer.lock  
+ ┣ 📜index.php  
+ ┗ 📜README.md  
 
+ ##
 ### What is this repository for? ###
 
 * Quick summary
