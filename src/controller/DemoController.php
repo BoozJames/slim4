@@ -41,4 +41,23 @@ class DemoController extends DemoService
             return $response->withHeader('Content-Type', RESPONSE_TYPE['json']);
         });
     }
+
+    /**
+     * @OA\Get(
+     *  path="/demo_service/test/check_session", tags={"Demo Service"}, 
+     *  @OA\Response (response="200", description="Success"),
+     *  @OA\Response (response="404", description="Not Found"),
+     * )
+     */
+    protected function demoTestCheckSession($endpoint = "/demo_service/test/check_session")
+    {
+        App::$mainApp->get($endpoint, function (Request $request, Response $response) {
+            $this->checkSession();
+            if ($this->code === 1) {
+                $this->testCheckSession();
+            }
+            $response->getBody()->write($this->getResponse());
+            return $response->withHeader('Content-Type', RESPONSE_TYPE['json']);
+        });
+    }
 }

@@ -2,6 +2,7 @@
 
 use Dotenv\Dotenv;
 use Yuri\Slim\constant\Constant;
+use Yuri\Slim\helper\DBManager;
 use Yuri\Slim\http\Web;
 
 // /* Remove this line when deploying the application */
@@ -16,5 +17,5 @@ $n = Dotenv::createImmutable(__DIR__);
 $n->load();
 
 new Constant();
-
+new DBManager();
 new Web();

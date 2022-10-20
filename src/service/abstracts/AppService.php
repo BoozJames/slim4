@@ -4,6 +4,7 @@ namespace Yuri\Slim\service\abstracts;
 
 use JsonSerializable;
 use ReflectionClass;
+use Yuri\Slim\helper\PhpSession;
 
 abstract class AppService implements JsonSerializable
 {
@@ -18,6 +19,15 @@ abstract class AppService implements JsonSerializable
         $methods = array_values(array_filter($mObj, fn ($v) => (str_contains($v->class, APP_CONTROLLER) !== false) && ($v->name !== "__construct")));
         foreach ($methods as $value) {
             $this->{$value->name}();
+        }
+    }
+
+    public function checkSession(string $session_key = 'id')
+    {
+        $session = new PhpSession();
+        if (!$session->isActive($session_key)) {
+            $this->code = 2;
+            $this->message = "no session.";
         }
     }
 
