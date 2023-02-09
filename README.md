@@ -1,6 +1,6 @@
 # README #
 
-A modified and optimized Slim4 framework for building API.       
+A modified and optimized Slim4 framework for building API.   
 # Folder Structure #
 📦slim4     
  ┣ 📂src    
@@ -37,28 +37,16 @@ A modified and optimized Slim4 framework for building API.
  ┗ 📜README.md  
 
  ##
-### What is this repository for? ###
+## Guide ##
 
-* Quick summary
-* Version
-* [Learn Markdown](https://github.com/yuricronos/slim4.git)
+* ### Usage  
+    * Controller - HTTP Routing and Conditions
+    * Model - Direct table schema or Object Model and Queries
+    * Service - Create methods and functionality using the Model
 
-### How do I get set up? ###
+* ### Configuration 
+    * `composer install` to install all dependencies    
+    * copy `.env.sample` and rename to `.env` and change database values
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* ### Deployment instructions   
+    * Copy and paste the root directory to root folder of the server
